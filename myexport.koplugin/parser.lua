@@ -64,6 +64,7 @@ local function parseAnnotations(annotations, book)
                 note    = item.note and trim(item.note) or nil,
                 chapter = item.chapter,
                 drawer  = item.drawer,
+                color   = item.color,
             }
             -- skip empty entries
             if clipping.text ~= "" or clipping.note then
@@ -96,6 +97,7 @@ local function parseLegacyHighlights(highlights, bookmarks, book)
                 note    = nil,
                 chapter = item.chapter,
                 drawer  = item.drawer,
+                color   = item.color,
             }
             -- attach note from matching bookmark, if any
             if item.datetime and bm_notes[item.datetime] then
