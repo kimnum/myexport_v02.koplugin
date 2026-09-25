@@ -118,8 +118,8 @@ function MarkdownFormatter:format(clippings, options)
                     local prefix   = style_prefix[clipping.drawer] or "> "
                     local text     = wrap_style(clipping.text, clipping.drawer)
                     local callout  = style_callout[clipping.color] or "> [!quote]"
-                    table.insert(lines,callout .. metas)
-                    table.insert(lines,"> " .. text)
+                    table.insert(lines, callout .. metas)
+                    table.insert(lines, "> " .. text)
                     --[[--
                     -- Multi-line highlights: prefix every line
                     for ln in (text .. "\n"):gmatch("([^\n]*)\n") do
