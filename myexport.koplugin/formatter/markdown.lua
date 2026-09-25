@@ -54,12 +54,18 @@ function MarkdownFormatter:format(clippings, options)
     local lines = {}
 
     for b_idx, book in ipairs(books) do
+        --[[--
         -- Book header
         table.insert(lines, "# " .. (book.title or "Unknown"))
+        
         if book.author and book.author ~= "" then
             table.insert(lines, "*" .. book.author .. "*")
         end
+        
         table.insert(lines, "")
+        --]]--
+
+        table.insert(lines, "## QUOTES"")
 
         local prev_chapter = nil
 
@@ -68,7 +74,7 @@ function MarkdownFormatter:format(clippings, options)
                 -- Chapter heading (only when it changes)
                 local ch = clipping.chapter
                 if ch and ch ~= prev_chapter then
-                    table.insert(lines, "## " .. ch)
+                    table.insert(lines, "### " .. ch)
                     table.insert(lines, "")
                     prev_chapter = ch
                 end
@@ -85,7 +91,9 @@ function MarkdownFormatter:format(clippings, options)
                 if incl_style and clipping.drawer then
                     table.insert(meta_parts, clipping.drawer)
                 end
+                
                 if #meta_parts > 0 then
+                    -- It is here where the text is inserted
                     table.insert(lines, "*" .. table.concat(meta_parts, " · ") .. "*")
                     table.insert(lines, "")
                 end
