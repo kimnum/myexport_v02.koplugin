@@ -17,6 +17,18 @@ local style_prefix = {
     invert     = "> ",
 }
 
+local style_callout = {
+    red = "> [!fail]",
+    orange = "> [!warning]",
+    yellow = "> [!question]",
+    green = "> [!check]",
+    olive = "> [!check]",
+    cyan = "> [!tip]",
+    blue = "> [!info]",
+    purple = "> [!example]",
+    gray = "> [!quote]",
+}
+
 local style_wrap = {
     lighten    = { "", "" },
     underscore = { "", "" },
@@ -93,19 +105,27 @@ function MarkdownFormatter:format(clippings, options)
                 end
                 
                 if #meta_parts > 0 then
-                    -- It is here where the text is inserted
+                    local metas = table.concat(meta_parts, " · ")
+                    --[[ old
                     table.insert(lines, "*" .. table.concat(meta_parts, " · ") .. "*")
                     table.insert(lines, "")
+                    --]]
                 end
+                
 
                 -- Highlight text
                 if clipping.text and clipping.text ~= "" then
-                    local prefix = style_prefix[clipping.drawer] or "> "
-                    local text   = wrap_style(clipping.text, clipping.drawer)
+                    local prefix   = style_prefix[clipping.drawer] or "> "
+                    local text     = wrap_style(clipping.text, clipping.drawer)
+                    local callout  = style_callout[clipping.color] or "> [!quote]"
+                    table.insert(lines,callout .. metas)
+                    table.insert(lines,"> " .. text)
+                    --[[--
                     -- Multi-line highlights: prefix every line
                     for ln in (text .. "\n"):gmatch("([^\n]*)\n") do
                         table.insert(lines, prefix .. ln)
                     end
+                    --]]--
                     table.insert(lines, "")
                 end
 
